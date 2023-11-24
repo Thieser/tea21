@@ -2,18 +2,21 @@
 #include <fmt/format.h>
 
 #include "CLI/CLI.hpp"
-#include "config.h"
+#include "config.h.in"
 
 auto main(int argc, char **argv) -> int
 {
+    std::string filename {DEFAULT_BMP_FILE};
     /**
      * CLI11 is a command line parser to add command line options
      * More info at https://github.com/CLIUtils/CLI11#usage
      */
+    
     CLI::App app{PROJECT_NAME};
     try
     {
         app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
+        app.add_option("-f, --format", fmt::format("Der filename ist: {}",filename));
         app.parse(argc, argv);
     }
     catch (const CLI::ParseError &e)
